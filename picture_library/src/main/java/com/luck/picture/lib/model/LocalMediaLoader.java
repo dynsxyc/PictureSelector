@@ -167,17 +167,18 @@ public class LocalMediaLoader {
 
                                         int duration = data.getInt
                                                 (data.getColumnIndexOrThrow(PROJECTION[5]));
+                                        if(checkFileExist(path)) {
+                                            LocalMedia image = new LocalMedia
+                                                    (path, duration, type, pictureType, w, h);
 
-                                        LocalMedia image = new LocalMedia
-                                                (path, duration, type, pictureType, w, h);
-
-                                        LocalMediaFolder folder = getImageFolder(path, imageFolders);
-                                        List<LocalMedia> images = folder.getImages();
-                                        images.add(image);
-                                        folder.setImageNum(folder.getImageNum() + 1);
-                                        latelyImages.add(image);
-                                        int imageNum = allImageFolder.getImageNum();
-                                        allImageFolder.setImageNum(imageNum + 1);
+                                            LocalMediaFolder folder = getImageFolder(path, imageFolders);
+                                            List<LocalMedia> images = folder.getImages();
+                                            images.add(image);
+                                            folder.setImageNum(folder.getImageNum() + 1);
+                                            latelyImages.add(image);
+                                            int imageNum = allImageFolder.getImageNum();
+                                            allImageFolder.setImageNum(imageNum + 1);
+                                        }
                                     } while (data.moveToNext());
 
                                     if (latelyImages.size() > 0) {
@@ -206,6 +207,17 @@ public class LocalMediaLoader {
                     public void onLoaderReset(Loader<Cursor> loader) {
                     }
                 });
+    }
+
+    //判读方法
+    boolean checkFileExist(String path) {
+        if (path != null){
+            if (new File(path).exists()){
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 
     /**
