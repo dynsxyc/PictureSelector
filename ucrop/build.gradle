@@ -11,6 +11,7 @@ android {
         versionCode cfgs.ucropVersionCode
         versionName cfgs.ucropVersionName
 
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
